@@ -196,11 +196,19 @@ export default function Home() {
 
   const filteredSchedules = schedules.filter(s => s.day === selectedDay);
 
-  // Calendar events
+  // Calendar events - Map days to December 3-7, 2024
+  const dayToDate: Record<number, string> = {
+    1: '2024-12-03',
+    2: '2024-12-04',
+    3: '2024-12-05',
+    4: '2024-12-06',
+    5: '2024-12-07'
+  };
+
   const calendarEvents = schedules.map(s => ({
     id: String(s.id),
     title: s.title,
-    start: `2025-03-0${s.day}T${s.time}`,
+    start: `${dayToDate[s.day]}T${s.time}`,
     backgroundColor: categoryColors[s.category as keyof typeof categoryColors]?.bg.replace('bg-', '#') || '#3b82f6',
     extendedProps: { ...s }
   }));
@@ -216,9 +224,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent mb-2">
-              🇯🇵 나고야 4일 여행 계획표
+              🇯🇵 나고야 여행 계획표
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">Nagoya Trip Itinerary · 12/03-12/06</p>
+            <p className="text-gray-600 dark:text-gray-300">Nagoya Trip Itinerary · 12/03-12/07 (5일)</p>
           </div>
 
           {/* View Mode Tabs */}
@@ -270,7 +278,7 @@ export default function Home() {
           >
             {/* Day Selector */}
             <div className="flex gap-3 mb-6 overflow-x-auto pb-2">
-              {[1, 2, 3, 4].map((dayNum) => (
+              {[1, 2, 3, 4, 5].map((dayNum) => (
                 <motion.button
                   key={dayNum}
                   whileHover={{ scale: 1.05 }}
@@ -333,7 +341,7 @@ export default function Home() {
                             className="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition-all"
                             disabled={loading}
                           >
-                            {[1, 2, 3, 4].map(d => <option key={d} value={d}>Day {d}</option>)}
+                            {[1, 2, 3, 4, 5].map(d => <option key={d} value={d}>Day {d}</option>)}
                           </select>
                         </div>
                         <div>
@@ -475,7 +483,7 @@ export default function Home() {
                                   className="px-4 py-2 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                                   disabled={loading}
                                 >
-                                  {[1, 2, 3, 4].map(d => <option key={d} value={d}>Day {d}</option>)}
+                                  {[1, 2, 3, 4, 5].map(d => <option key={d} value={d}>Day {d}</option>)}
                                 </select>
                                 <input
                                   type="time"
@@ -650,9 +658,9 @@ export default function Home() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4"
+          className="mt-8 grid grid-cols-2 md:grid-cols-5 gap-4"
         >
-          {[1, 2, 3, 4].map((dayNum) => {
+          {[1, 2, 3, 4, 5].map((dayNum) => {
             const daySchedules = schedules.filter(s => s.day === dayNum);
             const stats = {
               관광: daySchedules.filter(s => s.category === '관광').length,

@@ -165,7 +165,7 @@ export default function MapView({ schedules }: MapViewProps) {
           🗺️ 나고야 여행지 지도
         </h2>
         <p className="text-gray-600 dark:text-gray-400">
-          {schedulesWithCoords.length}개 위치가 지도에 표시됩니다 · 한국어로 안내 · 12/03-12/06
+          {schedulesWithCoords.length}개 위치가 지도에 표시됩니다 · 한국어로 안내 · 12/03-12/07 (5일)
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           {Object.entries(categoryColors).map(([category, color]) => (
@@ -283,7 +283,7 @@ export default function MapView({ schedules }: MapViewProps) {
             <div className="font-bold text-gray-900 dark:text-white mb-2">📌 마커 안내</div>
             <ul className="text-gray-600 dark:text-gray-400 space-y-1 text-xs">
               <li>• 마커 색상: 카테고리별 구분</li>
-              <li>• D1~D4 배지: 여행 일차 (12/03-12/06)</li>
+              <li>• D1~D5 배지: 여행 일차 (12/03-12/07)</li>
               <li>• 한국어/일본어 지명 병기</li>
             </ul>
           </div>
