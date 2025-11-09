@@ -26,20 +26,41 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// 도쿄 주요 장소 좌표 (한국어 이름 포함)
+// 나고야 주요 장소 좌표 (한국어 이름 포함)
 const locationCoordinates: Record<string, { coords: [number, number], korean: string, japanese: string }> = {
-  '센소지': { coords: [35.7148, 139.7967], korean: '센소지 (아사쿠사 절)', japanese: '浅草寺' },
-  '도쿄 스카이트리': { coords: [35.7101, 139.8107], korean: '도쿄 스카이트리', japanese: 'スカイツリー' },
-  '아키하바라': { coords: [35.7022, 139.7742], korean: '아키하바라 전자상가', japanese: '秋葉原' },
-  '메이지 신궁': { coords: [35.6764, 139.6993], korean: '메이지 신궁', japanese: '明治神宮' },
-  '하라주쿠': { coords: [35.6702, 139.7027], korean: '하라주쿠 거리', japanese: '原宿' },
-  '시부야': { coords: [35.6595, 139.7004], korean: '시부야', japanese: '渋谷' },
-  '츠키지': { coords: [35.6654, 139.7707], korean: '츠키지 시장', japanese: '築地' },
-  '황궁': { coords: [35.6852, 139.7528], korean: '황궁 외원', japanese: '皇居' },
-  '긴자': { coords: [35.6717, 139.7646], korean: '긴자 쇼핑거리', japanese: '銀座' },
-  '오다이바': { coords: [35.6262, 139.7744], korean: '오다이바 해변공원', japanese: 'お台場' },
-  '우에노': { coords: [35.7141, 139.7774], korean: '우에노 공원', japanese: '上野' },
-  '나리타': { coords: [35.7720, 140.3929], korean: '나리타 국제공항', japanese: '成田空港' },
+  // 나고야 시내
+  '나고야 성': { coords: [35.1856, 136.8998], korean: '나고야 성 (금빛 샤치호코)', japanese: '名古屋城' },
+  '나고야역': { coords: [35.1706, 136.8816], korean: '나고야역', japanese: '名古屋駅' },
+  '사카에': { coords: [35.1709, 136.9073], korean: '사카에 번화가', japanese: '栄' },
+  '오스': { coords: [35.1615, 136.9009], korean: '오스 상점가', japanese: '大須' },
+  '오스 상점가': { coords: [35.1615, 136.9009], korean: '오스 상점가', japanese: '大須商店街' },
+
+  // Day 1 장소
+  '도쿠가와엔': { coords: [35.1796, 136.9397], korean: '도쿠가와엔 정원', japanese: '徳川園' },
+  '히가시야마': { coords: [35.1581, 137.0094], korean: '히가시야마 스카이타워', japanese: '東山スカイタワー' },
+  '히가시야마 스카이타워': { coords: [35.1581, 137.0094], korean: '히가시야마 스카이타워', japanese: '東山スカイタワー' },
+
+  // Day 2 장소
+  '미라이타워': { coords: [35.1708, 136.9073], korean: '나고야 TV 타워', japanese: '名古屋テレビ塔' },
+  '시라카와고': { coords: [36.2576, 136.9061], korean: '시라카와고 마을 (세계문화유산)', japanese: '白川郷' },
+
+  // Day 3 장소
+  '이누야마': { coords: [35.3781, 136.9417], korean: '이누야마 성 (국보)', japanese: '犬山城' },
+  '이누야마 성': { coords: [35.3781, 136.9417], korean: '이누야마 성 (국보)', japanese: '犬山城' },
+  '이누야마시': { coords: [35.3781, 136.9417], korean: '이누야마 성하마을', japanese: '犬山城下町' },
+
+  // Day 4 장소
+  '아쿠아리움': { coords: [35.0926, 136.8791], korean: '나고야 항구 수족관', japanese: '名古屋港水族館' },
+  '나고야 아쿠아리움': { coords: [35.0926, 136.8791], korean: '나고야 항구 수족관 (범고래쇼)', japanese: '名古屋港水族館' },
+  '미나토구': { coords: [35.0926, 136.8791], korean: '미나토구 (항구 지역)', japanese: '港区' },
+  '아쓰타': { coords: [35.1281, 136.9076], korean: '아쓰타 신궁', japanese: '熱田神宮' },
+  '아쓰타 신궁': { coords: [35.1281, 136.9076], korean: '아쓰타 신궁 (나고야 3대 신사)', japanese: '熱田神宮' },
+  '슈모쿠관': { coords: [35.1827, 136.9213], korean: '문화의 길 슈모쿠관 (인생샷)', japanese: '文化のみち 橦木館' },
+
+  // 쇼핑
+  '파르코': { coords: [35.1709, 136.9073], korean: '파르코 백화점', japanese: 'PARCO' },
+  '미쓰자카야': { coords: [35.1709, 136.9073], korean: '미쓰자카야 백화점', japanese: '三越' },
+  '라시크': { coords: [35.1709, 136.9073], korean: '라시크', japanese: 'LACHIC' },
 };
 
 const categoryEmojis: Record<string, string> = {
@@ -134,17 +155,17 @@ export default function MapView({ schedules }: MapViewProps) {
     }))
     .filter(s => s.locationInfo !== null);
 
-  // 도쿄 중심 좌표
-  const tokyoCenter: [number, number] = [35.6762, 139.6503];
+  // 나고야 중심 좌표
+  const nagoyaCenter: [number, number] = [35.1815, 136.9066];
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-2">
-          🗺️ 도쿄 여행지 지도
+          🗺️ 나고야 여행지 지도
         </h2>
         <p className="text-gray-600 dark:text-gray-400">
-          {schedulesWithCoords.length}개 위치가 지도에 표시됩니다 · 한국어로 안내
+          {schedulesWithCoords.length}개 위치가 지도에 표시됩니다 · 한국어로 안내 · 12/03-12/06
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           {Object.entries(categoryColors).map(([category, color]) => (
@@ -158,7 +179,7 @@ export default function MapView({ schedules }: MapViewProps) {
 
       <div style={{ height: '700px', width: '100%' }}>
         <MapContainer
-          center={tokyoCenter}
+          center={nagoyaCenter}
           zoom={11}
           style={{ height: '100%', width: '100%' }}
           scrollWheelZoom={true}
@@ -255,13 +276,14 @@ export default function MapView({ schedules }: MapViewProps) {
               <li>• 마커를 클릭하면 상세 정보를 볼 수 있습니다</li>
               <li>• 마우스 휠로 확대/축소가 가능합니다</li>
               <li>• 드래그하여 지도를 이동할 수 있습니다</li>
+              <li>• 시라카와고는 나고야 북쪽 약 150km 거리</li>
             </ul>
           </div>
           <div>
             <div className="font-bold text-gray-900 dark:text-white mb-2">📌 마커 안내</div>
             <ul className="text-gray-600 dark:text-gray-400 space-y-1 text-xs">
               <li>• 마커 색상: 카테고리별 구분</li>
-              <li>• D1~D4 배지: 여행 일차</li>
+              <li>• D1~D4 배지: 여행 일차 (12/03-12/06)</li>
               <li>• 한국어/일본어 지명 병기</li>
             </ul>
           </div>

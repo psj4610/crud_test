@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "도쿄 3박4일 여행 계획표 | Tokyo Travel Planner",
-  description: "Next.js와 Supabase로 만든 도쿄 가족 여행 일정 관리 앱",
+  title: "나고야 4일 여행 계획표 | Nagoya Travel Planner",
+  description: "Next.js와 Supabase로 만든 나고야 여행 일정 관리 앱 (12/03-12/06)",
 };
 
 export default function RootLayout({

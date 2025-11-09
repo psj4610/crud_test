@@ -216,9 +216,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent mb-2">
-              🇯🇵 도쿄 3박4일 여행 계획표
+              🇯🇵 나고야 4일 여행 계획표
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">Tokyo Family Trip Itinerary</p>
+            <p className="text-gray-600 dark:text-gray-300">Nagoya Trip Itinerary · 12/03-12/06</p>
           </div>
 
           {/* View Mode Tabs */}
