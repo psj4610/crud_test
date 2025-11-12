@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Calendar as CalendarIcon,
   MapPin,
   Clock,
   Plus,
@@ -18,16 +17,13 @@ import {
   List,
   X,
   Save,
-  Sparkles
+  Leaf,
+  Calendar
 } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -66,7 +62,7 @@ const categoryColors = {
 export default function Home() {
   const [schedules, setSchedules] = useState<TravelSchedule[]>([]);
   const [selectedDay, setSelectedDay] = useState<number>(1);
-  const [viewMode, setViewMode] = useState<'timeline' | 'calendar' | 'map'>('timeline');
+  const [viewMode, setViewMode] = useState<'timeline' | 'map'>('timeline');
   const [showForm, setShowForm] = useState(false);
 
   // Form states
@@ -205,31 +201,14 @@ export default function Home() {
 
   const filteredSchedules = schedules.filter(s => s.day === selectedDay);
 
-  // Calendar events - Map days to December 3-7, 2024
-  const dayToDate: Record<number, string> = {
-    1: '2024-12-03',
-    2: '2024-12-04',
-    3: '2024-12-05',
-    4: '2024-12-06',
-    5: '2024-12-07'
-  };
-
-  const calendarEvents = schedules.map(s => ({
-    id: String(s.id),
-    title: s.title,
-    start: `${dayToDate[s.day]}T${s.time}`,
-    backgroundColor: categoryColors[s.category as keyof typeof categoryColors] || '#3b82f6',
-    extendedProps: { ...s }
-  }));
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-pink-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-100 to-amber-200 dark:from-amber-950 dark:via-orange-950 dark:to-amber-900">
       {/* Header */}
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 100 }}
-        className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl shadow-2xl sticky top-0 z-50 border-b"
+        className="bg-gradient-to-r from-amber-900/90 via-orange-800/90 to-amber-900/90 backdrop-blur-xl shadow-2xl sticky top-0 z-50 border-b-4 border-amber-600"
       >
         <div className="max-w-7xl mx-auto px-4 py-8">
           <motion.div
@@ -239,14 +218,14 @@ export default function Home() {
             transition={{ delay: 0.2 }}
           >
             <div className="flex items-center justify-center gap-3 mb-3">
-              <Sparkles className="w-8 h-8 text-orange-500" />
-              <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 bg-clip-text text-transparent">
+              <Leaf className="w-10 h-10 text-amber-400 animate-pulse" />
+              <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-amber-300 via-orange-300 to-amber-400 bg-clip-text text-transparent drop-shadow-lg">
                 나고야 여행 계획표
               </h1>
-              <Sparkles className="w-8 h-8 text-pink-500" />
+              <Leaf className="w-10 h-10 text-orange-400 animate-pulse" />
             </div>
-            <p className="text-lg text-muted-foreground font-medium">
-              🇯🇵 Nagoya Trip Itinerary · 12/03-12/07 (5일)
+            <p className="text-lg text-amber-100 font-medium">
+              🍂 Nagoya Autumn Trip · 12/03-12/07 (5일)
             </p>
           </motion.div>
 
@@ -258,16 +237,12 @@ export default function Home() {
             transition={{ delay: 0.3 }}
           >
             <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as any)} className="w-full max-w-md">
-              <TabsList className="grid w-full grid-cols-3 h-12">
-                <TabsTrigger value="timeline" className="flex items-center gap-2">
+              <TabsList className="grid w-full grid-cols-2 h-12 bg-amber-800/50">
+                <TabsTrigger value="timeline" className="flex items-center gap-2 data-[state=active]:bg-amber-600">
                   <List className="w-4 h-4" />
                   타임라인
                 </TabsTrigger>
-                <TabsTrigger value="calendar" className="flex items-center gap-2">
-                  <CalendarIcon className="w-4 h-4" />
-                  캘린더
-                </TabsTrigger>
-                <TabsTrigger value="map" className="flex items-center gap-2">
+                <TabsTrigger value="map" className="flex items-center gap-2 data-[state=active]:bg-amber-600">
                   <MapIcon className="w-4 h-4" />
                   지도
                 </TabsTrigger>
@@ -302,8 +277,8 @@ export default function Home() {
                       variant={selectedDay === dayNum ? "default" : "outline"}
                       size="lg"
                       className={selectedDay === dayNum
-                        ? "bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700"
-                        : ""
+                        ? "bg-gradient-to-r from-amber-700 to-orange-700 hover:from-amber-800 hover:to-orange-800 border-2 border-amber-500"
+                        : "border-2 border-amber-300 hover:bg-amber-100"
                       }
                     >
                       <div>
@@ -319,14 +294,14 @@ export default function Home() {
 
               {/* Add Button */}
               <div className="mb-6 flex justify-between items-center">
-                <h2 className="text-3xl font-bold flex items-center gap-2">
-                  <CalendarIcon className="text-orange-600 w-8 h-8" />
+                <h2 className="text-3xl font-bold flex items-center gap-2 text-amber-900 dark:text-amber-100">
+                  <Leaf className="text-amber-700 w-8 h-8" />
                   Day {selectedDay} 일정
                 </h2>
                 <Button
                   onClick={() => setShowForm(!showForm)}
                   size="lg"
-                  className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
+                  className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700"
                 >
                   {showForm ? <X className="w-5 h-5 mr-2" /> : <Plus className="w-5 h-5 mr-2" />}
                   {showForm ? '취소' : '일정 추가'}
@@ -342,10 +317,10 @@ export default function Home() {
                     exit={{ opacity: 0, height: 0 }}
                     className="mb-6"
                   >
-                    <Card>
+                    <Card className="border-2 border-amber-300 bg-amber-50/50 dark:bg-amber-950/50">
                       <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                          <Plus className="text-blue-600" />
+                        <CardTitle className="flex items-center gap-2 text-amber-900 dark:text-amber-100">
+                          <Plus className="text-amber-700" />
                           새 일정 추가
                         </CardTitle>
                       </CardHeader>
@@ -430,7 +405,7 @@ export default function Home() {
                           <Button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
+                            className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700"
                             size="lg"
                           >
                             {loading ? '추가중...' : '일정 추가하기'}
@@ -445,12 +420,12 @@ export default function Home() {
               {/* Timeline */}
               <div className="relative">
                 {/* Timeline Line */}
-                <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-orange-500 via-red-500 to-pink-500 rounded-full" />
+                <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 via-orange-600 to-amber-700 rounded-full shadow-lg" />
 
                 {filteredSchedules.length === 0 ? (
                   <Card>
                     <CardContent className="py-12 text-center">
-                      <CalendarIcon size={64} className="mx-auto text-muted-foreground mb-4" />
+                      <Calendar size={64} className="mx-auto text-muted-foreground mb-4" />
                       <p className="text-lg text-muted-foreground">
                         Day {selectedDay}에 등록된 일정이 없습니다.
                       </p>
@@ -615,37 +590,6 @@ export default function Home() {
                   </div>
                 )}
               </div>
-            </motion.div>
-          )}
-
-          {/* Calendar View */}
-          {viewMode === 'calendar' && (
-            <motion.div
-              key="calendar"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Card>
-                <CardContent className="pt-6">
-                  <FullCalendar
-                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    initialView="timeGridWeek"
-                    headerToolbar={{
-                      left: 'prev,next today',
-                      center: 'title',
-                      right: 'timeGridWeek,timeGridDay'
-                    }}
-                    events={calendarEvents}
-                    height="auto"
-                    slotMinTime="08:00:00"
-                    slotMaxTime="23:00:00"
-                    allDaySlot={false}
-                    locale="ko"
-                  />
-                </CardContent>
-              </Card>
             </motion.div>
           )}
 
