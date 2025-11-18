@@ -31,19 +31,19 @@ const PEOPLE = ['성진', '지열', '성동'] as const;
 
 const personColors = {
   '성진': {
-    badge: 'bg-blue-500',
-    gradient: 'from-blue-600 to-blue-700',
-    border: 'border-blue-300'
+    badge: 'bg-blue-500 dark:bg-blue-600',
+    button: 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800',
+    border: 'border-blue-300 dark:border-blue-700'
   },
   '지열': {
-    badge: 'bg-green-500',
-    gradient: 'from-green-600 to-green-700',
-    border: 'border-green-300'
+    badge: 'bg-green-500 dark:bg-green-600',
+    button: 'bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800',
+    border: 'border-green-300 dark:border-green-700'
   },
   '성동': {
-    badge: 'bg-purple-500',
-    gradient: 'from-purple-600 to-purple-700',
-    border: 'border-purple-300'
+    badge: 'bg-purple-500 dark:bg-purple-600',
+    button: 'bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800',
+    border: 'border-purple-300 dark:border-purple-700'
   }
 };
 
@@ -189,7 +189,7 @@ export default function ChecklistView() {
         <Button
           onClick={() => setShowForm(!showForm)}
           size="lg"
-          className={`bg-gradient-to-r ${personColors[selectedPerson as keyof typeof personColors].gradient} hover:opacity-90`}
+          className={personColors[selectedPerson as keyof typeof personColors].button}
         >
           {showForm ? <X className="w-5 h-5 mr-2" /> : <Plus className="w-5 h-5 mr-2" />}
           {showForm ? '취소' : '항목 추가'}
@@ -219,7 +219,7 @@ export default function ChecklistView() {
                   <Button
                     type="submit"
                     disabled={loading}
-                    className={`w-full bg-gradient-to-r ${personColors[selectedPerson as keyof typeof personColors].gradient} hover:opacity-90`}
+                    className={`w-full ${personColors[selectedPerson as keyof typeof personColors].button}`}
                     size="lg"
                   >
                     <Plus className="w-5 h-5 mr-2" />
@@ -255,8 +255,11 @@ export default function ChecklistView() {
               transition={{ delay: index * 0.05 }}
               whileHover={{ scale: 1.02 }}
             >
-              <Card className={`border-l-4 ${item.is_completed ? 'bg-gray-50 dark:bg-gray-900/50' : ''}`}
-                style={{ borderLeftColor: personColors[selectedPerson as keyof typeof personColors].badge.replace('bg-', '#') }}
+              <Card className={`border-l-4 ${item.is_completed ? 'bg-gray-50 dark:bg-gray-800/50' : 'dark:bg-gray-800'}`}
+                style={{
+                  borderLeftColor: selectedPerson === '성진' ? '#3b82f6' :
+                                   selectedPerson === '지열' ? '#22c55e' : '#a855f7'
+                }}
               >
                 <CardContent className="py-4">
                   <div className="flex items-center justify-between gap-4">
@@ -267,9 +270,13 @@ export default function ChecklistView() {
                         className="flex-shrink-0 hover:scale-110 transition-transform"
                       >
                         {item.is_completed ? (
-                          <CheckSquare className={`w-6 h-6 ${personColors[selectedPerson as keyof typeof personColors].badge.replace('bg-', 'text-')}`} />
+                          <CheckSquare className={`w-6 h-6 ${
+                            selectedPerson === '성진' ? 'text-blue-500 dark:text-blue-400' :
+                            selectedPerson === '지열' ? 'text-green-500 dark:text-green-400' :
+                            'text-purple-500 dark:text-purple-400'
+                          }`} />
                         ) : (
-                          <Square className="w-6 h-6 text-gray-400" />
+                          <Square className="w-6 h-6 text-gray-400 dark:text-gray-500" />
                         )}
                       </button>
                       <span className={`text-lg ${item.is_completed ? 'line-through text-muted-foreground' : 'font-medium'}`}>

@@ -204,13 +204,13 @@ export default function Home() {
   const filteredSchedules = schedules.filter(s => s.day === selectedDay);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-100 to-amber-200 dark:from-amber-950 dark:via-orange-950 dark:to-amber-900">
+    <div className="min-h-screen bg-amber-50 dark:bg-gray-900">
       {/* Header */}
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 100 }}
-        className="bg-gradient-to-r from-amber-900/90 via-orange-800/90 to-amber-900/90 backdrop-blur-xl shadow-2xl sticky top-0 z-50 border-b-4 border-amber-600"
+        className="bg-amber-800 dark:bg-gray-800 backdrop-blur-xl shadow-2xl sticky top-0 z-50 border-b-4 border-amber-600 dark:border-amber-700"
       >
         <div className="max-w-7xl mx-auto px-4 py-8">
           <motion.div
@@ -220,13 +220,13 @@ export default function Home() {
             transition={{ delay: 0.2 }}
           >
             <div className="flex items-center justify-center gap-3 mb-3">
-              <Leaf className="w-10 h-10 text-amber-400 animate-pulse" />
-              <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-amber-300 via-orange-300 to-amber-400 bg-clip-text text-transparent drop-shadow-lg">
+              <Leaf className="w-10 h-10 text-amber-300 dark:text-amber-400 animate-pulse" />
+              <h1 className="text-5xl md:text-6xl font-black text-amber-100 dark:text-amber-200 drop-shadow-lg">
                 나고야 여행 계획표
               </h1>
-              <Leaf className="w-10 h-10 text-orange-400 animate-pulse" />
+              <Leaf className="w-10 h-10 text-amber-300 dark:text-amber-400 animate-pulse" />
             </div>
-            <p className="text-lg text-amber-100 font-medium">
+            <p className="text-lg text-amber-100 dark:text-amber-300 font-medium">
               🍂 Nagoya Autumn Trip · 12/03-12/07 (5일)
             </p>
           </motion.div>
@@ -283,8 +283,8 @@ export default function Home() {
                       variant={selectedDay === dayNum ? "default" : "outline"}
                       size="lg"
                       className={selectedDay === dayNum
-                        ? "bg-gradient-to-r from-amber-700 to-orange-700 hover:from-amber-800 hover:to-orange-800 border-2 border-amber-500"
-                        : "border-2 border-amber-300 hover:bg-amber-100"
+                        ? "bg-amber-700 hover:bg-amber-800 border-2 border-amber-500 dark:bg-amber-600 dark:hover:bg-amber-700"
+                        : "border-2 border-amber-300 hover:bg-amber-100 dark:border-amber-700 dark:hover:bg-gray-800"
                       }
                     >
                       <div>
@@ -307,7 +307,7 @@ export default function Home() {
                 <Button
                   onClick={() => setShowForm(!showForm)}
                   size="lg"
-                  className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700"
+                  className="bg-amber-600 hover:bg-amber-700 dark:bg-amber-700 dark:hover:bg-amber-800"
                 >
                   {showForm ? <X className="w-5 h-5 mr-2" /> : <Plus className="w-5 h-5 mr-2" />}
                   {showForm ? '취소' : '일정 추가'}
@@ -411,7 +411,7 @@ export default function Home() {
                           <Button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700"
+                            className="w-full bg-amber-600 hover:bg-amber-700 dark:bg-amber-700 dark:hover:bg-amber-800"
                             size="lg"
                           >
                             {loading ? '추가중...' : '일정 추가하기'}
@@ -426,7 +426,7 @@ export default function Home() {
               {/* Timeline */}
               <div className="relative">
                 {/* Timeline Line */}
-                <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-500 via-orange-600 to-amber-700 rounded-full shadow-lg" />
+                <div className="absolute left-8 top-0 bottom-0 w-1 bg-amber-600 dark:bg-amber-700 rounded-full shadow-lg" />
 
                 {filteredSchedules.length === 0 ? (
                   <Card>
