@@ -43,3 +43,27 @@ CREATE POLICY "Enable update access for all users" ON checklist
 
 CREATE POLICY "Enable delete access for all users" ON checklist
   FOR DELETE USING (true);
+
+-- 기본 체크리스트 항목 추가
+INSERT INTO checklist (person, title, is_completed) VALUES
+  -- 성진
+  ('성진', '비짓 재팬', false),
+  ('성진', 'E-Sim || 로밍 설정', false),
+  ('성진', '여권', false),
+  ('성진', '엔화 확인', false),
+  ('성진', '교통(기차)', false),
+
+  -- 지열
+  ('지열', '비짓 재팬', false),
+  ('지열', 'E-Sim || 로밍 설정', false),
+  ('지열', '여권', false),
+  ('지열', '엔화 확인', false),
+  ('지열', '교통(기차)', false),
+
+  -- 성동
+  ('성동', '비짓 재팬', false),
+  ('성동', 'E-Sim || 로밍 설정', false),
+  ('성동', '여권', false),
+  ('성동', '엔화 확인', false),
+  ('성동', '교통(기차)', false)
+ON CONFLICT DO NOTHING;
