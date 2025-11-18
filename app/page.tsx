@@ -18,7 +18,8 @@ import {
   X,
   Save,
   Leaf,
-  Calendar
+  Calendar,
+  CheckSquare
 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
@@ -32,6 +33,7 @@ import { Select } from '@/components/ui/select';
 
 // Dynamically import MapView to avoid SSR issues
 const MapView = dynamic(() => import('@/components/MapView'), { ssr: false });
+const ChecklistView = dynamic(() => import('@/components/ChecklistView'), { ssr: false });
 
 interface TravelSchedule {
   id: number;
@@ -62,7 +64,7 @@ const categoryColors = {
 export default function Home() {
   const [schedules, setSchedules] = useState<TravelSchedule[]>([]);
   const [selectedDay, setSelectedDay] = useState<number>(1);
-  const [viewMode, setViewMode] = useState<'timeline' | 'map'>('timeline');
+  const [viewMode, setViewMode] = useState<'timeline' | 'map' | 'checklist'>('timeline');
   const [showForm, setShowForm] = useState(false);
 
   // Form states
@@ -236,8 +238,8 @@ export default function Home() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as any)} className="w-full max-w-md">
-              <TabsList className="grid w-full grid-cols-2 h-12 bg-amber-800/50">
+            <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as any)} className="w-full max-w-2xl">
+              <TabsList className="grid w-full grid-cols-3 h-12 bg-amber-800/50">
                 <TabsTrigger value="timeline" className="flex items-center gap-2 data-[state=active]:bg-amber-600">
                   <List className="w-4 h-4" />
                   타임라인
@@ -245,6 +247,10 @@ export default function Home() {
                 <TabsTrigger value="map" className="flex items-center gap-2 data-[state=active]:bg-amber-600">
                   <MapIcon className="w-4 h-4" />
                   지도
+                </TabsTrigger>
+                <TabsTrigger value="checklist" className="flex items-center gap-2 data-[state=active]:bg-amber-600">
+                  <CheckSquare className="w-4 h-4" />
+                  체크리스트
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -603,6 +609,19 @@ export default function Home() {
               transition={{ duration: 0.3 }}
             >
               <MapView schedules={schedules} />
+            </motion.div>
+          )}
+
+          {/* Checklist View */}
+          {viewMode === 'checklist' && (
+            <motion.div
+              key="checklist"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ChecklistView />
             </motion.div>
           )}
         </AnimatePresence>
